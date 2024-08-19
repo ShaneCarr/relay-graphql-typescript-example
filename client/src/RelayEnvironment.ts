@@ -11,9 +11,11 @@ function fetchQuery(operation: any, variables: any) {
       variables,
     }),
   }).then(response => {
-    return response.json();
+    console.log('Raw response:', response); // This logs the raw response object
+    return response.json(); // This parses the response as JSON
   });
 }
+
 
 const RelayEnvironment = new Environment({
   network: Network.create(fetchQuery),
