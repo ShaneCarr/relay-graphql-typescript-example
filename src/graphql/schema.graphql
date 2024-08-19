@@ -1,0 +1,22 @@
+type ActivityStatus {
+  hasPersonalMention: Boolean
+  hasChannelMention: Boolean
+  hasTeamMention: Boolean
+  hasUnreadMessage: Boolean
+  isNewForUser: Boolean
+}
+
+type Team {
+  id: ID
+  name: String
+  activityStatus: ActivityStatus
+}
+
+type Query {
+  teams: [Team]
+}
+
+type Mutation {
+  updateTeamStatus(id: ID!, hasUnreadMessage: Boolean!): Team
+  markTeamAsRead(id: ID!): Team
+}
