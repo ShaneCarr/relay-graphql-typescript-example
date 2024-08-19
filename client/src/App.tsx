@@ -33,9 +33,22 @@ function App() {
   const data = useLazyLoadQuery<AppTeamQuery>(TeamQuery, {});
   const [commitUpdate] = useMutation(UpdateTeamStatusMutation);
 
-  const handleUpdate = (id: string) => {
+  const handleMarkAsRead = (id: string) => {
     commitUpdate({
       variables: { id, hasUnreadMessage: false },
+    });
+  };
+
+  const handleMarkAsUnread = (id: string) => {
+    commitUpdate({
+      variables: { id, hasUnreadMessage: true },
+    });
+  };
+
+  const simulateNewMessage = (id: string) => {
+    // Simulate a new message by marking as unread
+    commitUpdate({
+      variables: { id, hasUnreadMessage: true },
     });
   };
 
@@ -47,9 +60,11 @@ function App() {
           <li
             key={team.id}
             style={{ fontWeight: team.activityStatus.hasUnreadMessage ? 'bold' : 'normal' }}
-            onClick={() => handleUpdate(team.id)}
           >
             {team.name} - Unread Messages: {team.activityStatus.hasUnreadMessage ? 'Yes' : 'No'}
+            <button onClick={() => handleMarkAsRead(team.id)}>Mark as Read</button>
+            <button onClick={() => handleMarkAsUnread(team.id)}>Mark as Unread</button>
+            <button onClick={() => simulateNewMessage(team.id)}>Simulate New Message</button>
           </li>
         ))}
       </ul>

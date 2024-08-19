@@ -10,11 +10,21 @@ function fetchQuery(operation: any, variables: any) {
       query: operation.text,
       variables,
     }),
-  }).then(response => {
-    console.log('Raw response:', response); // This logs the raw response object
-    return response.json(); // This parses the response as JSON
+  })
+  .then(response => {
+    console.log('Raw response:', response);
+    return response.json();
+  })
+  .then(json => {
+    console.log('Parsed JSON:', json);
+    return json;
+  })
+  .catch(error => {
+    console.error('Fetch query error:', error);
+    throw error;
   });
 }
+
 
 
 const RelayEnvironment = new Environment({
