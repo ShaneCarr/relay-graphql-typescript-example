@@ -110,3 +110,237 @@ npx relay-compiler
 
 NODE_NO_WARNINGS=1 npx ts-node src/server.ts
 
+
+```bash
+
+#!/bin/bash
+
+# Script: setup.sh
+# Purpose: Set up environment, install dependencies, and configure a Relay GraphQL TypeScript project.
+
+# Step 1: Install nvm (Node Version Manager) if not already installed
+echo "Installing nvm..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.bashrc
+
+# Step 2: Install Node.js using nvm
+echo "Installing Node.js version 16 using nvm..."
+nvm install 16
+nvm use 16
+
+# Verify Node.js and npm installation
+echo "Verifying Node.js and npm installation..."
+node -v
+npm -v
+
+# Step 3: Set up project directory
+echo "Setting up project directory..."
+mkdir -p relay-graphql-typescript-example
+cd relay-graphql-typescript-example
+
+# Step 4: Initialize a new Node.js project
+echo "Initializing new Node.js project..."
+npm init -y
+
+# Step 5: Install necessary dependencies
+echo "Installing project dependencies..."
+npm install apollo-server-express express graphql graphql-tag
+
+# Step 6: Install development dependencies
+echo "Installing development dependencies..."
+npm install --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript @types/express @types/node babel-loader eslint nodemon prettier relay-compiler ts-node typescript webpack webpack-cli webpack-dev-server
+
+# Step 7: Set up project structure
+echo "Setting up project structure..."
+mkdir -p src/graphql client/src
+touch src/server.ts client/src/index.tsx client/relay.config.json client/tsconfig.json webpack.config.js
+
+# Populate basic files with boilerplate content
+echo "Populating basic files with boilerplate content..."
+
+# tsconfig.json
+cat <<EOT > tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "jsx": "react",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}
+EOT
+
+# webpack.config.js
+cat <<EOT > webpack.config.js
+const path = require('path');
+
+module.exports = {
+  mode: 'development',
+  entry: './client/src/index.tsx',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000,
+  },
+};
+EOT
+
+# server.ts
+cat <<EOT > src/server.ts
+import { ApolloServer } from 'apollo-server-express';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import { gql } from 'graphql-tag';
+import express, { Application } from 'express';
+
+// Load GraphQL Schema
+const typeDefs = gql(
+  readFileSync(resolve(__dirname, './graphql/schema.graphql'), {
+    encoding: 'utf8',
+  })
+);
+
+let teams = [
+  {
+    id: '1',
+    name: 'Team Alpha',
+    activityStatus: {
+      hasPersonalMention: true,
+      hasChannelMention: false,
+      hasTeamMention: false,
+      hasUnreadMessage: true,
+      isNewForUser: true,
+    },
+  },
+  {
+    id: '2',
+    name: 'Team Beta',
+    activityStatus: {
+      hasPersonalMention: false,
+      hasChannelMention: true,
+      hasTeamMention: true,
+      hasUnreadMessage: false,
+      isNewForUser: false,
+    },
+  },
+];
+
+// Define ActivityStatus type
+type ActivityStatus = {
+  hasPersonalMention: boolean;
+  hasChannelMention: boolean;
+  hasTeamMention: boolean;
+  hasUnreadMessage: boolean;
+  isNewForUser: boolean;
+};
+
+// Define Team type
+type Team = {
+  id: string;
+  name: string;
+  activityStatus: ActivityStatus;
+};
+
+const resolvers = {
+  Query: {
+    teams: () => teams,
+  },
+  Mutation: {
+    updateTeamStatus: (
+      _parent: any,
+      { id, hasUnreadMessage }: { id: string; hasUnreadMessage: boolean }
+    ): Team | undefined => {
+      const team = teams.find((team) => team.id === id);
+      if (team) {
+        team.activityStatus.hasUnreadMessage = hasUnreadMessage;
+      }
+      return team;
+    },
+    markTeamAsRead: (_parent: any, { id }: { id: string }): Team | undefined => {
+      const team = teams.find((team) => team.id === id);
+      if (team) {
+        team.activityStatus.hasUnreadMessage = false;
+      }
+      return team;
+    },
+  },
+};
+
+// Setup Apollo Server
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// Setup Express App
+const app: Application = express();
+
+// Apply Apollo GraphQL middleware
+server.start().then(() => {
+  server.applyMiddleware({ app });
+
+  app.listen({ port: 4000 }, () => {
+    console.log(\`Server ready at http://localhost:4000\${server.graphqlPath}\`);
+  });
+});
+EOT
+
+# Step 8: Final output
+echo "Setup complete! Your project is ready."
+echo "Run 'npm run start' to start the GraphQL server."
+
+```
+
+
+
+````bash
+#!/bin/bash
+# Project Setup Instructions
+
+# 1. Install Node Version Manager (nvm)
+# This command downloads and installs nvm, which is used to manage Node.js versions
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.bashrc
+
+# 2. Install Node.js Using nvm
+# This command installs Node.js version 18 and sets it as the active version
+nvm install 18
+nvm use 18
+
+# 3. Install npm (If Needed)
+# This command updates npm to the latest version (optional, only if necessary)
+npm install -g npm@latest
+
+# 4. Install Project Dependencies
+# Run this command in the root directory to install all necessary dependencies
+npm install
+
+# 5. Running the Server
+# Start the GraphQL server from the project root
+ts-node src/server.ts
+
+# 6. Running the Client
+# Navigate to the client directory, install dependencies if not already done, and start the client application
+cd client
+npm install  # Only run if dependencies are not already installed
+npm start
+
+````
+
