@@ -1,5 +1,3 @@
-# src/schema.graphql
-
 type ActivityStatus {
   hasPersonalMention: Boolean
   hasChannelMention: Boolean
@@ -14,11 +12,46 @@ type Team {
   activityStatus: ActivityStatus
 }
 
-type Query {
-  teams: [Team]
+type Member {
+  id: ID!
+  name: String!
+  consumptionHorizon: Int!
 }
 
+type Message {
+  id: ID!
+  text: String!
+  author: Member!
+  arrivalTime: String!
+  mentions: [Member!]!
+}
+
+type Thread {
+  id: ID!
+  title: String!
+  messages: [Message!]!
+}
+
+type Group {
+  id: ID!
+  name: String!
+  members: [Member!]!
+  threads: [Thread!]!
+}
+
+# Queries for both Teams and Groups
+type Query {
+  teams: [Team]
+  groups: [Group!]!
+}
+
+# Mutations for Teams and Groups
 type Mutation {
   updateTeamStatus(id: ID!, hasUnreadMessage: Boolean!): Team
   markTeamAsRead(id: ID!): Team
+
+  addMemberToGroup(groupId: ID!, memberId: ID!, memberName: String!): Group!
+  addMessageToThread(threadId: ID!, text: String!, authorId: ID!, mentions: [ID!]): Message!
+  markMessageAsSeen(groupId: ID!, memberId: ID!, messageId: Int!): Member!
+  markAllAsSeen(groupId: ID!, memberId: ID!): Member!
 }

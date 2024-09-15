@@ -23,64 +23,84 @@ npm install --save-dev babel-plugin-relay
 
 Before you start, make sure you have the following installed:
 
-Node.js (>= 14.x recommended)
-npm (comes with Node.js) or yarn (optional)
-TypeScript (installed globally with npm install -g typescript or locally per project)
-ts-node (installed globally with npm install -g ts-node or locally per project)
+- Node.js (>= 14.x recommended)
+- npm (comes with Node.js) or yarn (optional)
+- TypeScript (installed globally with 
+- npm install -g typescript 
+- or locally per project)
+- ts-node (installed globally with 
+- npm install -g ts-node 
+- r locally per project)
 
-Dependencies
+## Dependencies
 
-Server Dependencies
-Install the server-side dependencies using npm:
+### Server Dependencies
+- Install the server-side dependencies using npm:
 
 cd src
 npm install
 
 
-Dependencies for the server include:
+- Dependencies for the server include:
 
-express: Web framework for Node.js
-apollo-server-express: Apollo Server integration with Express
-graphql: JavaScript implementation of GraphQL
-graphql-tag: A library to parse GraphQL queries
-Client Dependencies
-Install the client-side dependencies using npm:
+- express: Web framework for Node.js
+- apollo-server-express: Apollo Server integration with Express 
+- graphql: JavaScript implementation of GraphQL 
+- graphql-tag: A library to parse GraphQL queries 
+- Client Dependencies 
+- Install the client-side dependencies using npm:
 
 cd client
 npm install
 
-Dependencies for the client include:
+## Dependencies for the client include:
 
-react: JavaScript library for building user interfaces
-react-dom: React package for working with the DOM
-react-relay: Relay hooks and components for React
-relay-runtime: Core runtime for Relay
-typescript: TypeScript language support
-@types/react, @types/react-dom: TypeScript type definitions for React
+- react: JavaScript library for building user interfaces 
+- react-dom: React package for working with the DOM
+- react-relay: Relay hooks and components for React
+- relay-runtime: Core runtime for Relay
+- typescript: TypeScript language support
+- @types/react, @types/react-dom: TypeScript type definitions for React
+  npm install @mui/material @emotion/react @emotion/styled
 
 
 
-Running the Project
+### Running the Project
 
-Step 1: Start the Server
-Navigate to the server directory and start the server using ts-node:
+### Step 1: Start the Server
+- Navigate to the server directory and start the server using ts-node:
 
-bash
+```bash
 Copy code
 cd src
 npx ts-node server.ts
-The server will start and listen on port 4000. You should see the following output:
+```
+- The server will start and listen on port 4000. You should see the following output:
 
-arduino
-Copy code
+```bash
 Server ready at http://localhost:4000/graphql
+```
 Step 2: Start the Client
 In a separate terminal, navigate to the client directory and start the client:
+```graphql
+query ExampleQuery {
+  teams {
+    id,
+    activityStatus {
+      hasChannelMention
+    }, 
+    name
+  }
+}
 
-bash
-Copy code
+```
+
+```bash
+
 cd client
 npm start
+````
+
 This will start the React application, and it should open in your browser at http://localhost:3000.
 
 Step 3: Interacting with the App
