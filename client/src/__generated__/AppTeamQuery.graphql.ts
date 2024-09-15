@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b4688c904700f6f188a53c39d3039c9>>
+ * @generated SignedSource<<1084c6364bd9e5fd0d01f6ea0efd9f58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,7 @@ export type AppTeamQuery$variables = Record<PropertyKey, never>;
 export type AppTeamQuery$data = {
   readonly teams: ReadonlyArray<{
     readonly activityStatus: {
-      readonly hasChannelMention: boolean | null | undefined;
-      readonly hasPersonalMention: boolean | null | undefined;
-      readonly hasTeamMention: boolean | null | undefined;
       readonly hasUnreadMessage: boolean | null | undefined;
-      readonly isNewForUser: boolean | null | undefined;
     } | null | undefined;
     readonly id: string | null | undefined;
     readonly name: string | null | undefined;
@@ -64,35 +60,7 @@ var v0 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "hasPersonalMention",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "hasChannelMention",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "hasTeamMention",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "hasUnreadMessage",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isNewForUser",
             "storageKey": null
           }
         ],
@@ -120,16 +88,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "96db315ea6eb059f729f151b68803857",
+    "cacheID": "fc80788ed28e0552991ace436fd2f1e9",
     "id": null,
     "metadata": {},
     "name": "AppTeamQuery",
     "operationKind": "query",
-    "text": "query AppTeamQuery {\n  teams {\n    id\n    name\n    activityStatus {\n      hasPersonalMention\n      hasChannelMention\n      hasTeamMention\n      hasUnreadMessage\n      isNewForUser\n    }\n  }\n}\n"
+    "text": "query AppTeamQuery {\n  teams {\n    id\n    name\n    activityStatus {\n      hasUnreadMessage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fb96ec3066ae322b0fa91d94a5890410";
+(node as any).hash = "84fe7c04ccc32422db5a5c3fcf738435";
 
 export default node;

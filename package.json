@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm-run-all --parallel start:server start:client",
+    "startserial": "npm-run-all --serial start:server start:client",
     "start:server": "nodemon --exec ts-node src/server.ts",
     "start:client": "cd client && npm start",
     "build": "npm run relay && npm-run-all build:client",

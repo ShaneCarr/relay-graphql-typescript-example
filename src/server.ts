@@ -7,7 +7,11 @@ import { gql } from 'graphql-tag';
 import express, { Application } from 'express';
 import teamResolvers from './graphql/resolvers/teamResolvers';
 import groupResolvers from './graphql/resolvers/groupResolvers';
+import userResolvers from './graphql/resolvers/userResolvers';
+import groupMemberResolvers from './graphql/resolvers/groupMemberResolvers';
 
+
+console.log('Starting server setup...');
 // Load GraphQL Schema
 const typeDefs = gql(
     readFileSync(resolve(__dirname, './graphql/schema.graphql'), {

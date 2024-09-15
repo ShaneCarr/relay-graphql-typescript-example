@@ -19,6 +19,9 @@ let groups = [
 
 // Group resolvers
 const groupResolvers = {
+    Query: {
+        groups: () => groups,
+    },
     Mutation: {
         addMessageToThread: (_parent: any, { threadId, text, authorId, mentions }: { threadId: string; text: string; authorId: string; mentions: string[] }) => {
             const group = groups.find(group => group.threads.find(thread => thread.id === threadId));
